@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <script>
+        function editNote(noteId) {
+            const newText = prompt("Edit note:", document.getElementById(`note-${noteId}`).textContent);
+            if (newText !== null) {
+                updateNote(noteId, newText);
+            }
+        }
+    </script>
+
+<div style="display: flex; justify-content: center; padding: 30px;">
+    <h1 style="font-family: montserrat; font-weight: bold; padding-left: 20px;">NOOTS</h1>
+</div>
+
+    <ul class="list-group list-group-flush" id="notes" style="padding-left: 100px;">
+    {% for note in user.notes %}
+    <li class="list-group-item" style="background-color: #28282B; color: #D9D9D9; height: 90px; font-size: 14px; border-radius: 15px; padding-left: 20px; padding-top: 10px;">
+        <span id="note-{{ note.id }}" onClick="editNote({{ note.id }})">{{ note.data }}</span>
+        <button type="button" class="close" onClick="deleteNote({{ note.id }})"><span style="color: #D9D9D9; font-size: 30px; padding-top: 15px;" class="glyphicon glyphicon-remove-sign"></span></button>
+    </li>
+    <br>
+    {% endfor %}
+</ul>
+
+<form method="POST" style="padding-left: 100px;">
+    <div style="display: flex; align-items: center;">
+        <div style="flex: 1;">
+            <textarea style="resize: none; background-color: #28282B; border: transparent; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-top-left-radius: 15px; border-bottom-left-radius: 15px; font-size: 14px; color: #D9D9D9; padding-left: 20px; padding-top: 10px; height: 90px;" name="note" id="note" class="form-control" placeholder="Click to add notes!"></textarea>
+        </div>
+        <div>
+            <button type="submit" style="border-top-right-radius: 15px; border: transparent; border-bottom-right-radius: 15px; background-color: #28282B; height: 90px; color: #D9D9D9; padding-right: 10px    ;"><span style="color: #D9D9D9; font-size: 30px;" class="glyphicon glyphicon-ok-sign"></span></button>
+        </div>
+    </div>
+</form>
+    {% endblock %}
